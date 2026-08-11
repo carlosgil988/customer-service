@@ -1,4 +1,4 @@
-package com.carlosgil.customer_service;
+package com.carlosgil.customer_service.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

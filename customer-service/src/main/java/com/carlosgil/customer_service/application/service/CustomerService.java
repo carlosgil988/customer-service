@@ -1,6 +1,7 @@
 package com.carlosgil.customer_service.application.service;
 
 import com.carlosgil.customer_service.application.port.out.CustomerRepository;
+import com.carlosgil.customer_service.domain.exception.DuplicateCustomerEmailException;
 import com.carlosgil.customer_service.domain.model.Customer;
 
 public class CustomerService {
@@ -12,6 +13,10 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
+        if (customerRepository.existsByEmail(customer.getEmail())) {
+            throw new DuplicateCustomerEmailException();
+        } else {
+            return customerRepository.save(customer);
+        }
     }
 }

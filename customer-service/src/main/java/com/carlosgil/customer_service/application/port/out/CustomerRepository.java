@@ -4,4 +4,5 @@ import com.carlosgil.customer_service.domain.model.Customer;
 
 public interface CustomerRepository {
     Customer save(Customer customer);
+    Boolean existsByEmail(String email);
 }

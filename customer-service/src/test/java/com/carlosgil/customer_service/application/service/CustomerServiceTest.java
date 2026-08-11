@@ -63,6 +63,7 @@ class CustomerServiceTest {
                 () -> customerService.createCustomer(customer)
         );
 
+        verify(customerRepository).existsByEmail(customer.getEmail());
         verify(customerRepository, never()).save(customer);
 
     }

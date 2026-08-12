@@ -8,13 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -28,7 +25,7 @@ class CustomerServiceTest {
     @Test
     void createCustomer_WithValidData_ShouldCreateCustomer(){
 
-
+        //GIVEN
         when(customerRepository.save(any(Customer.class)))
                 .thenReturn(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
         // WHEN
@@ -61,6 +58,22 @@ class CustomerServiceTest {
 
         verify(customerRepository).existsByEmail(customer.getEmail());
         verify(customerRepository, never()).save(customer);
+
+    }
+
+    @Test
+    void deleteCustomer_WithValidData_ShouldDeleteACustomer(){
+        Customer customer = new Customer();
+        customer.setId(2);
+        // GIVEN
+        when(customerRepository.delete(customer.getId())).thenReturn(true);
+
+        //WHEN
+        Boolean customerDeleted= customerService.delete(customer.getId());
+        assertTrue(customerDeleted);
+
+        //THEN
+        verify(customerRepository, times(1)).delete(2);
 
     }
 

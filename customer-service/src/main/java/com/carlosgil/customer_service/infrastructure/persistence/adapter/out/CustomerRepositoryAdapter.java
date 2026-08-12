@@ -23,6 +23,7 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
                 .email(customer.getEmail()).build());
 
       return  Customer.builder()
+              .id(savedCustomer.getId())
               .name(savedCustomer.getName())
               .surname(savedCustomer.getSurname())
               .email(savedCustomer.getEmail()).build();

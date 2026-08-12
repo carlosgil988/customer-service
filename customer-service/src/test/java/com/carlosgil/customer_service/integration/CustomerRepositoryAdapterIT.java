@@ -20,11 +20,8 @@ public class CustomerRepositoryAdapterIT {
     @Test
     void shouldCreateCustomerAndPersistInDatabase(){
         //save first
-        Customer customer = new Customer();
-        customer.setName("Carlos");
-        customer.setSurname("Gil");
-        customer.setEmail("carlos.gil@example.com");
-        Customer savedCustomer = customerRepositoryAdapter.save(customer);
+        Customer savedCustomer = customerRepositoryAdapter
+                .save(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
 
         assertNotNull(savedCustomer);
         assertEquals("Carlos", savedCustomer.getName());

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerRepositoryAdapter implements CustomerRepository {
 
-    private CustomerJpaRepository customerJpaRepository;
+    private final CustomerJpaRepository customerJpaRepository;
 
     public CustomerRepositoryAdapter(CustomerJpaRepository customerJpaRepository) {
         this.customerJpaRepository = customerJpaRepository;
@@ -17,16 +17,15 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setName(customer.getName());
-        customerEntity.setSurname(customer.getSurname());
-        customerEntity.setEmail(customer.getEmail());
-        CustomerEntity savedCustomer = customerJpaRepository.save(customerEntity);
-        Customer customer1 = new Customer();
-        customer1.setName(savedCustomer.getName());
-        customer1.setSurname(savedCustomer.getSurname());
-        customer1.setEmail(savedCustomer.getEmail());
-        return customer1;
+        CustomerEntity savedCustomer = customerJpaRepository.save(CustomerEntity.builder()
+                .name(customer.getName())
+                .surname(customer.getSurname())
+                .email(customer.getEmail()).build());
+
+      return  Customer.builder()
+              .name(savedCustomer.getName())
+              .surname(savedCustomer.getSurname())
+              .email(savedCustomer.getEmail()).build();
     }
 
     @Override

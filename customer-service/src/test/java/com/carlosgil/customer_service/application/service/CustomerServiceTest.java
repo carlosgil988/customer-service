@@ -27,15 +27,13 @@ class CustomerServiceTest {
 
     @Test
     void createCustomer_WithValidData_ShouldCreateCustomer(){
-        // GIVEN mejor usar pattern builder
-        Customer customer = new Customer();
-        customer.setName("Carlos");
-        customer.setSurname("Gil");
-        customer.setEmail("carlos.gil@example.com");
 
-        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+        when(customerRepository.save(any(Customer.class)))
+                .thenReturn(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
         // WHEN
-        Customer result = customerService.createCustomer(customer);
+        Customer result = customerService
+                .createCustomer(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
 
         // THEN (Entonces se verifica que el resultado sea el esperado)
         assertNotNull(result);
@@ -44,15 +42,13 @@ class CustomerServiceTest {
         assertEquals("carlos.gil@example.com", result.getEmail());
 
         //Quiero comprobar que se ha enviado ESTE Customer
-        verify(customerRepository).save(customer);
+        verify(customerRepository).save(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
     }
 
     @Test
     void createCustomer_WithDuplicatedEmail_ShouldThrowException(){
 
         Customer customer = new Customer();
-        customer.setName("Carlos");
-        customer.setSurname("Gil");
         customer.setEmail("carlos.gil@example.com");
 
         //GIVEN

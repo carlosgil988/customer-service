@@ -3,7 +3,9 @@ package com.carlosgil.customer_service.application.service;
 import com.carlosgil.customer_service.application.port.out.CustomerRepository;
 import com.carlosgil.customer_service.domain.exception.DuplicateCustomerEmailException;
 import com.carlosgil.customer_service.domain.model.Customer;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;

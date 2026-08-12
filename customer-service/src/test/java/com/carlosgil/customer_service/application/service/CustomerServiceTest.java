@@ -66,14 +66,14 @@ class CustomerServiceTest {
         Customer customer = new Customer();
         customer.setId(2);
         // GIVEN
-        when(customerRepository.delete(customer.getId())).thenReturn(true);
+        when(customerRepository.deleteCustomer(customer.getId())).thenReturn(true);
 
         //WHEN
-        Boolean customerDeleted= customerService.delete(customer.getId());
+        boolean customerDeleted= customerService.deleteCustomer(customer.getId());
         assertTrue(customerDeleted);
 
         //THEN
-        verify(customerRepository, times(1)).delete(2);
+        verify(customerRepository, times(1)).deleteCustomer(2);
 
     }
 

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, Integer> {
 
      boolean existsByEmail(String email);
-
+     boolean deleteCustomer(int id);
 }

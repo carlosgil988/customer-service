@@ -6,6 +6,8 @@ import com.carlosgil.customer_service.domain.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
@@ -17,5 +19,9 @@ public class CustomerService {
             throw new DuplicateCustomerEmailException();
         }
             return customerRepository.save(customer);
+    }
+
+    public boolean deleteCustomer(int customerId){
+        return customerRepository.deleteCustomer(customerId);
     }
 }

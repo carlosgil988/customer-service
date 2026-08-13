@@ -43,6 +43,13 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
 
     @Override
     public Optional<Customer> findCustomerById(int id) {
-        return customerJpaRepository.findCustomerById(id);
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setId(id);
+        Optional<CustomerEntity> customerById = customerJpaRepository.findCustomerById(customerEntity.getId());
+        return customerById.map(entity -> Customer.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .surname(entity.getSurname())
+                .email(entity.getEmail()).build());
     }
 }

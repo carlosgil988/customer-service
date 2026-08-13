@@ -117,18 +117,34 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_withValidData_shouldUpdateCustomer(){
 
-        //Actualizamos customer
-        // GIVEN
-        when(customerRepository
-                .updateCustomer(any(Customer.class)))
-                .thenReturn(Customer.builder().name("David").surname("Martinez").email("david.martinez@example.com").build());
+        Customer customer = new Customer();
+        customer.setId(7);
+        customer.setName("Carlos");
+        customer.setSurname("Gil");
+        customer.setEmail("carlos.gil@example.com");
+
+        Customer customerUpdated = new Customer();
+        customerUpdated.setId(7);
+        customerUpdated.setName("David");
+        customerUpdated.setSurname("Alonso");
+        customerUpdated.setEmail("david.alonso@example.com");
+
+        //GIVEN
+        when(customerRepository.save(customerUpdated))
+                .thenReturn(customerUpdated);
+
+        //GIVEN
+        when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(Optional.of(customerUpdated));
 
         // WHEN
         Customer resultUpdated = customerService
-                .updateCustomer(Customer.builder().name("David").surname("Martinez").email("david.martinez@example.com").build());
+                .updateCustomer(customerUpdated);
 
-        // THEN (Entonces se verifica que el resultado sea el esperado)
         assertNotNull(resultUpdated);
+        assertEquals("David", resultUpdated.getName());
+        assertEquals("Alonso", resultUpdated.getSurname());
+        assertEquals("david.alonso@example.com", resultUpdated.getEmail());
+
 
     }
 

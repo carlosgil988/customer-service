@@ -52,12 +52,4 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
                 .email(entity.getEmail()).build());
     }
 
-    @Override
-    public Customer updateCustomer(Customer customer) {
-        return  Customer.builder()
-                .id(customer.getId())
-                .name(customer.getName())
-                .surname(customer.getSurname())
-                .email(customer.getEmail()).build();
-    }
 }

@@ -1,6 +1,7 @@
 package com.carlosgil.customer_service.application.service;
 
 import com.carlosgil.customer_service.application.port.out.CustomerRepository;
+import com.carlosgil.customer_service.domain.exception.CustomerNotFoundException;
 import com.carlosgil.customer_service.domain.exception.DuplicateCustomerEmailException;
 import com.carlosgil.customer_service.domain.model.Customer;
 import com.carlosgil.customer_service.infrastructure.persistence.entity.CustomerEntity;
@@ -29,8 +30,13 @@ public class CustomerService {
     public Optional<Customer> findCustomerById(int customerId) {
         return customerRepository.findCustomerById(customerId);
     }
-
     public Customer updateCustomer(Customer customer) {
-        return customerRepository.updateCustomer(customer);
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerById(customer.getId());
+
+        if (optionalCustomer.isEmpty()) {
+            throw new CustomerNotFoundException("Cliente no encontrado con id: " + customer.getId());
+        }
+
+        return customerRepository.save(customer);
     }
 }

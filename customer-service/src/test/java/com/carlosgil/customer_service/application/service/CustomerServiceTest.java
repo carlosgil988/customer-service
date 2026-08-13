@@ -134,7 +134,7 @@ class CustomerServiceTest {
                 .thenReturn(customerUpdated);
 
         //GIVEN
-        when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(Optional.of(customerUpdated));
+        when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(Optional.of(customer));
 
         // WHEN
         Customer resultUpdated = customerService

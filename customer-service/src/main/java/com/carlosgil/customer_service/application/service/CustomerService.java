@@ -4,7 +4,6 @@ import com.carlosgil.customer_service.application.port.out.CustomerRepository;
 import com.carlosgil.customer_service.domain.exception.CustomerNotFoundException;
 import com.carlosgil.customer_service.domain.exception.DuplicateCustomerEmailException;
 import com.carlosgil.customer_service.domain.model.Customer;
-import com.carlosgil.customer_service.infrastructure.persistence.entity.CustomerEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

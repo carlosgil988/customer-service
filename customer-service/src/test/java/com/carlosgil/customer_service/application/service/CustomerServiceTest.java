@@ -97,13 +97,13 @@ class CustomerServiceTest {
 
     @Test
     void findCustomerById_WithValidId_ShouldReturnCustomer(){
-        CustomerEntity customer = new CustomerEntity();
+        Customer customer = new Customer();
         customer.setId(6);
         //GIVEN
         when(customerRepository.findCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
         //WHEN
-        Optional<CustomerEntity> customerFound = customerService.findCustomerById(customer.getId());
+        Optional<Customer> customerFound = customerService.findCustomerById(customer.getId());
 
         assertTrue(customerFound.isPresent(), "El cliente debería estar presente");
 

@@ -42,7 +42,7 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     }
 
     @Override
-    public Optional<CustomerEntity> findCustomerById(int id) {
-        return customerJpaRepository.findById(id);
+    public Optional<Customer> findCustomerById(int id) {
+        return customerJpaRepository.findCustomerById(id);
     }
 }

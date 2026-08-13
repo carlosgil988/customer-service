@@ -26,7 +26,7 @@ public class CustomerService {
         return customerRepository.deleteCustomer(customerId);
     }
 
-    public Optional<CustomerEntity> findCustomerById(int customerId) {
+    public Optional<Customer> findCustomerById(int customerId) {
         return customerRepository.findCustomerById(customerId);
     }
 }

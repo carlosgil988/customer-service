@@ -29,4 +29,8 @@ public class CustomerService {
     public Optional<Customer> findCustomerById(int customerId) {
         return customerRepository.findCustomerById(customerId);
     }
+
+    public Customer updateCustomer(Customer customer) {
+        return customerRepository.updateCustomer(customer);
+    }
 }

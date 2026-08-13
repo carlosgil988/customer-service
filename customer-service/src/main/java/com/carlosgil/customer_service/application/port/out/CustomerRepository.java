@@ -10,4 +10,5 @@ public interface CustomerRepository {
     Boolean existsByEmail(String email);
     Boolean deleteCustomer(int id);
     Optional<Customer> findCustomerById(int id);
+    Customer updateCustomer(Customer customer);
 }

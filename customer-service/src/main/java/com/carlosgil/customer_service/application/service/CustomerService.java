@@ -6,8 +6,6 @@ import com.carlosgil.customer_service.domain.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class CustomerService {

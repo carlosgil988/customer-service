@@ -77,5 +77,38 @@ class CustomerServiceTest {
 
     }
 
+    @Test
+    void deleteCustomer_that_does_not_exist_return_false(){
+        Customer customer = new Customer();
+        customer.setId(5);
+        // GIVEN
+        when(customerRepository.deleteCustomer(customer.getId())).thenReturn(false);
+
+        //WHEN
+        boolean customerDeleted= customerService.deleteCustomer(customer.getId());
+        assertFalse(customerDeleted);
+
+        //THEN
+        verify(customerRepository, times(1)).deleteCustomer(5);
+    }
+
+    @Test
+    void findCustomerById_WithValidId_ShouldReturnCustomer(){
+        Customer customer = new Customer();
+        customer.setId(6);
+        //GIVEN
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(customer);
+
+        //WHEN
+        Customer customerFound = customerService.findCustomerById(customer.getId());
+
+        assertNotNull(customerFound);
+        assertEquals(6, customerFound.getId());
+        assertSame(customer, customerFound);
+        //THEN
+        verify(customerRepository, times(1)).findCustomerById(6);
+
+    }
+
 
 }

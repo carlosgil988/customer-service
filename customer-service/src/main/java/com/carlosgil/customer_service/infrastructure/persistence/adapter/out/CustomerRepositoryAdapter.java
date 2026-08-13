@@ -6,6 +6,8 @@ import com.carlosgil.customer_service.infrastructure.persistence.entity.Customer
 import com.carlosgil.customer_service.infrastructure.persistence.repository.CustomerJpaRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CustomerRepositoryAdapter implements CustomerRepository {
 
@@ -37,5 +39,10 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     @Override
     public Boolean deleteCustomer(int id) {
         return customerJpaRepository.deleteCustomer(id);
+    }
+
+    @Override
+    public Optional<CustomerEntity> findCustomerById(int id) {
+        return customerJpaRepository.findById(id);
     }
 }

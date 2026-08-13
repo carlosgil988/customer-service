@@ -1,6 +1,5 @@
 package com.carlosgil.customer_service.infrastructure.persistence.repository;
 
-import com.carlosgil.customer_service.domain.model.Customer;
 import com.carlosgil.customer_service.infrastructure.persistence.entity.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

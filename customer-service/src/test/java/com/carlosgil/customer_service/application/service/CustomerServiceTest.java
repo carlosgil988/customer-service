@@ -114,5 +114,23 @@ class CustomerServiceTest {
 
     }
 
+    @Test
+    void updateCustomer_withValidData_shouldUpdateCustomer(){
+
+        //Actualizamos customer
+        // GIVEN
+        when(customerRepository
+                .updateCustomer(any(Customer.class)))
+                .thenReturn(Customer.builder().name("David").surname("Martinez").email("david.martinez@example.com").build());
+
+        // WHEN
+        Customer resultUpdated = customerService
+                .updateCustomer(Customer.builder().name("David").surname("Martinez").email("david.martinez@example.com").build());
+
+        // THEN (Entonces se verifica que el resultado sea el esperado)
+        assertNotNull(resultUpdated);
+
+    }
+
 
 }

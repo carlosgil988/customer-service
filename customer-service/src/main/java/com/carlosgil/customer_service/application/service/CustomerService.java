@@ -26,17 +26,17 @@ public class CustomerService {
         return customerRepository.deleteCustomer(customerId);
     }
 
-    public Optional<Customer> findCustomerById(int customerId) {
-        Optional<Customer> optionalCustomerFound = customerRepository.findCustomerById(customerId);
-        if(optionalCustomerFound.isEmpty()){
+    public Customer findCustomerById(int customerId) {
+        Customer customerFound = customerRepository.findCustomerById(customerId);
+        if(customerFound== null){
             throw new CustomerNotFoundException("Cliente no encontrado con id: " + customerId);
         }
-        return  customerRepository.findCustomerById(customerId);
+        return  customerFound;
     }
     public Customer updateCustomer(Customer customer) {
-        Optional<Customer> optionalCustomer = customerRepository.findCustomerById(customer.getId());
+        Customer updateCustomer = customerRepository.findCustomerById(customer.getId());
 
-        if (optionalCustomer.isEmpty()) {
+        if (updateCustomer == null) {
             throw new CustomerNotFoundException("Cliente no encontrado con id: " + customer.getId());
         }
 

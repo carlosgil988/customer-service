@@ -100,15 +100,15 @@ class CustomerServiceTest {
         Customer customer = new Customer();
         customer.setId(6);
         //GIVEN
-        when(customerRepository.findCustomerById(customer.getId())).thenReturn(Optional.of(customer));
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(customer);
 
         //WHEN
-        Optional<Customer> customerFound = customerService.findCustomerById(customer.getId());
+        Customer customerFound = customerService.findCustomerById(customer.getId());
 
-        assertTrue(customerFound.isPresent(), "El cliente debería estar presente");
+        assertNotNull(customerFound);
 
-        assertEquals(6, customerFound.get().getId());
-        assertSame(customer, customerFound.get());
+        assertEquals(6, customerFound.getId());
+        assertSame(customer, customerFound);
         //THEN
         verify(customerRepository, times(1)).findCustomerById(6);
 
@@ -134,7 +134,7 @@ class CustomerServiceTest {
                 .thenReturn(customerUpdated);
 
         //GIVEN
-        when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(Optional.of(customer));
+        when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(customer);
 
         // WHEN
         Customer resultUpdated = customerService
@@ -155,7 +155,7 @@ class CustomerServiceTest {
 
 
         //GIVEN
-        when(customerRepository.findCustomerById(customer.getId())).thenReturn(Optional.empty());
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(null);
 
         assertThrows(
                 CustomerNotFoundException.class,

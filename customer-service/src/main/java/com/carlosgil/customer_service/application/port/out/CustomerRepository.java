@@ -9,5 +9,5 @@ public interface CustomerRepository {
     Customer save(Customer customer);
     Boolean existsByEmail(String email);
     Boolean deleteCustomer(int id);
-    Optional<Customer> findCustomerById(int id);
+    Customer findCustomerById(int id);
 }

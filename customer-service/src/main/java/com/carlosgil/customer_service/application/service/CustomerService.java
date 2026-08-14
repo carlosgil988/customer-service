@@ -27,7 +27,11 @@ public class CustomerService {
     }
 
     public Optional<Customer> findCustomerById(int customerId) {
-        return customerRepository.findCustomerById(customerId);
+        Optional<Customer> optionalCustomerFound = customerRepository.findCustomerById(customerId);
+        if(optionalCustomerFound.isEmpty()){
+            throw new CustomerNotFoundException("Cliente no encontrado con id: " + customerId);
+        }
+        return  customerRepository.findCustomerById(customerId);
     }
     public Customer updateCustomer(Customer customer) {
         Optional<Customer> optionalCustomer = customerRepository.findCustomerById(customer.getId());

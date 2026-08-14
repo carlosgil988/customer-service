@@ -22,8 +22,11 @@ public class CustomerService {
             return customerRepository.save(customer);
     }
 
-    public boolean deleteCustomer(int customerId){
-        return customerRepository.deleteCustomer(customerId);
+    public void deleteCustomer(int customerId){
+        Customer customerFound = findCustomerById(customerId);
+        if(customerFound!=null){
+            customerRepository.deleteById(customerId);
+        }
     }
 
     public Customer findCustomerById(int customerId) {

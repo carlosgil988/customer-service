@@ -34,9 +34,9 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
         return customerJpaRepository.existsByEmail(email);
     }
 
-    @Override
-    public Boolean deleteCustomer(int id) {
-        return customerJpaRepository.deleteById(id);
+
+    public void deleteById(int id) {
+        customerJpaRepository.deleteById(id);
     }
 
     @Override

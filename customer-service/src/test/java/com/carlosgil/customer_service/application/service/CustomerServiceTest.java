@@ -68,31 +68,31 @@ class CustomerServiceTest {
     void deleteCustomer_WithValidData_ShouldDeleteACustomer(){
         Customer customer = new Customer();
         customer.setId(2);
-        // GIVEN
-        when(customerRepository.deleteCustomer(customer.getId())).thenReturn(true);
+        //GIVEN
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(customer);
 
         //WHEN
-        boolean customerDeleted= customerService.deleteCustomer(customer.getId());
-        assertTrue(customerDeleted);
+        customerService.deleteCustomer(customer.getId());
 
         //THEN
-        verify(customerRepository, times(1)).deleteCustomer(2);
+        verify(customerRepository, times(1)).deleteById(2);
 
     }
 
     @Test
-    void deleteCustomer_that_does_not_exist_return_false(){
+    void deleteCustomer_WhenCustomerDoesNotExist_ShouldThrowCustomerNotFoundException(){
         Customer customer = new Customer();
-        customer.setId(5);
-        // GIVEN
-        when(customerRepository.deleteCustomer(customer.getId())).thenReturn(false);
+        customer.setId(99);
+
+        //GIVEN
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(null);
 
         //WHEN
-        boolean customerDeleted= customerService.deleteCustomer(customer.getId());
-        assertFalse(customerDeleted);
+        assertThrows(
+                CustomerNotFoundException.class,
+                () -> customerService.deleteCustomer(customer.getId())
+        );
 
-        //THEN
-        verify(customerRepository, times(1)).deleteCustomer(5);
     }
 
     @Test
@@ -148,22 +148,6 @@ class CustomerServiceTest {
 
     }
 
-    @Test
-    void findCustomerById_WithValidId_WhenCustomerDoesNotExist_ShouldThrowCustomerNotFoundException(){
-        Customer customer = new Customer();
-        customer.setId(99);
-
-
-        //GIVEN
-        when(customerRepository.findCustomerById(customer.getId())).thenReturn(null);
-
-        assertThrows(
-                CustomerNotFoundException.class,
-                () -> customerService.findCustomerById(customer.getId())
-        );
-
-        verify(customerRepository, times(1)).findCustomerById(99);
-    }
 
 
 }

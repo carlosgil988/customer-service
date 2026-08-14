@@ -1,9 +1,9 @@
 package com.carlosgil.customer_service.application.service;
 
 import com.carlosgil.customer_service.application.port.out.CustomerRepository;
+import com.carlosgil.customer_service.domain.exception.CustomerNotFoundException;
 import com.carlosgil.customer_service.domain.exception.DuplicateCustomerEmailException;
 import com.carlosgil.customer_service.domain.model.Customer;
-import com.carlosgil.customer_service.infrastructure.persistence.entity.CustomerEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -146,6 +146,23 @@ class CustomerServiceTest {
         assertEquals("david.alonso@example.com", resultUpdated.getEmail());
 
 
+    }
+
+    @Test
+    void findCustomerById_WithValidId_WhenCustomerDoesNotExist_ShouldThrowCustomerNotFoundException(){
+        Customer customer = new Customer();
+        customer.setId(99);
+
+
+        //GIVEN
+        when(customerRepository.findCustomerById(customer.getId())).thenReturn(Optional.empty());
+
+        assertThrows(
+                CustomerNotFoundException.class,
+                () -> customerService.findCustomerById(customer.getId())
+        );
+
+        verify(customerRepository, times(1)).findCustomerById(99);
     }
 
 

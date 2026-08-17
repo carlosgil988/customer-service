@@ -75,7 +75,7 @@ class CustomerServiceTest {
         customerService.deleteCustomer(customer.getId());
 
         //THEN
-        verify(customerRepository, times(1)).deleteById(2);
+        verify(customerRepository).deleteById(2);
 
     }
 
@@ -115,7 +115,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void updateCustomer_withValidData_shouldUpdateCustomer(){
+    void updateCustomer_withValidData_ShouldUpdateCustomer(){
 
         Customer customer = new Customer();
         customer.setId(7);
@@ -133,8 +133,11 @@ class CustomerServiceTest {
         when(customerRepository.save(customerUpdated))
                 .thenReturn(customerUpdated);
 
+
+
         //GIVEN
         when(customerRepository.findCustomerById(customerUpdated.getId())).thenReturn(customer);
+
 
         // WHEN
         Customer resultUpdated = customerService
@@ -145,7 +148,7 @@ class CustomerServiceTest {
         assertEquals("Alonso", resultUpdated.getSurname());
         assertEquals("david.alonso@example.com", resultUpdated.getEmail());
 
-
+        verify(customerRepository).save(customerUpdated);
     }
 
 

@@ -27,13 +27,13 @@ class CustomerServiceTest {
 
     @Test
     void createCustomer_WithValidData_ShouldCreateCustomer(){
-
+        Customer customer = Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build();
         //GIVEN
         when(customerRepository.save(any(Customer.class)))
-                .thenReturn(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
+                .thenReturn(customer);
         // WHEN
         Customer result = customerService
-                .createCustomer(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
+                .createCustomer(customer);
 
         // THEN (Entonces se verifica que el resultado sea el esperado)
         assertNotNull(result);
@@ -41,8 +41,8 @@ class CustomerServiceTest {
         assertEquals("Gil", result.getSurname());
         assertEquals("carlos.gil@example.com", result.getEmail());
 
-        //Quiero comprobar que se ha enviado ESTE Customer
-        verify(customerRepository).save(Customer.builder().name("Carlos").surname("Gil").email("carlos.gil@example.com").build());
+
+        verify(customerRepository).save(customer);
     }
 
     @Test

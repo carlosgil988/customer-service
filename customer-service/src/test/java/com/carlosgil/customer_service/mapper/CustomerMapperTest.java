@@ -3,9 +3,6 @@ package com.carlosgil.customer_service.mapper;
 import com.carlosgil.customer.api.model.Customer;
 import com.carlosgil.customer_service.infrastructure.mapper.CustomerMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

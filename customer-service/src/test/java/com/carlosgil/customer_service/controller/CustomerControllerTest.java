@@ -2,6 +2,7 @@ package com.carlosgil.customer_service.controller;
 
 import com.carlosgil.customer_service.application.service.CustomerService;
 import com.carlosgil.customer_service.domain.model.Customer;
+import com.carlosgil.customer_service.infrastructure.controller.CustomerController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,10 +39,15 @@ public class CustomerControllerTest {
                 .thenReturn(customer);
 
         // WHEN
-        ResponseEntity<Customer> response =
+        ResponseEntity<com.carlosgil.customer.api.model.Customer> response =
                 customerController.getCustomerById(6);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals((int) response.getBody().getId(), customer.getId());
+        assertEquals(response.getBody().getSurname(), customer.getSurname());
+        assertEquals(response.getBody().getName(), customer.getName());
+        assertEquals(response.getBody().getEmail(), customer.getEmail());
 
     }
 }

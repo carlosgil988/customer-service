@@ -6,7 +6,9 @@ import com.carlosgil.customer_service.application.service.CustomerService;
 import com.carlosgil.customer_service.infrastructure.mapper.CustomerMapper;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class CustomerController  implements CustomersApi {
 
     private final CustomerService customerService;

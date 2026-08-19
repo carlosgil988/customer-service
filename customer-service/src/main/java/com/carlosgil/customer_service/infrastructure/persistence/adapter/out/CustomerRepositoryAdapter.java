@@ -18,6 +18,7 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     @Override
     public Customer save(Customer customer) {
         CustomerEntity savedCustomer = customerJpaRepository.save(CustomerEntity.builder()
+                .id(customer.getId())
                 .name(customer.getName())
                 .surname(customer.getSurname())
                 .email(customer.getEmail()).build());
@@ -51,6 +52,11 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
                     .email(customerById.getEmail()).build();
         }
             return null;
+    }
+
+    @Override
+    public Boolean existsByEmailAndIdNot(String email, int id) {
+        return customerJpaRepository.existsByEmailAndIdNot(email, id);
     }
 
 }

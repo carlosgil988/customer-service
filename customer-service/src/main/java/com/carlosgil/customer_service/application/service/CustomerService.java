@@ -38,9 +38,11 @@ public class CustomerService {
     }
     public Customer updateCustomer(Customer customer) {
         Customer updateCustomer = customerRepository.findCustomerById(customer.getId());
-
         if (updateCustomer == null) {
             throw new CustomerNotFoundException("Cliente no encontrado con id: " + customer.getId());
+        }
+        if (customerRepository.existsByEmailAndIdNot(customer.getEmail(),customer.getId())) {
+            throw new DuplicateCustomerEmailException("Cliente existe con el email"+customer.getEmail());
         }
 
         return customerRepository.save(customer);

@@ -7,4 +7,5 @@ public interface CustomerRepository {
     Boolean existsByEmail(String email);
     void deleteById(int id);
     Customer findCustomerById(int id);
+    Boolean existsByEmailAndIdNot(String email, int id);
 }

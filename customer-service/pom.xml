@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.carlosgil</groupId>
 			<artifactId>customer-api</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

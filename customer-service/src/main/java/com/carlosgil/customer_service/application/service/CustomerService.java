@@ -17,7 +17,7 @@ public class CustomerService {
 
     public Customer createCustomer(Customer customer) {
         if (customerRepository.existsByEmail(customer.getEmail())) {
-            throw new DuplicateCustomerEmailException();
+            throw new DuplicateCustomerEmailException("Cliente existe con el email"+customer.getEmail());
         }
             return customerRepository.save(customer);
     }

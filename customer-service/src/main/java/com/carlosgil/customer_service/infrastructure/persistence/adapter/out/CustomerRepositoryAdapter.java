@@ -43,12 +43,14 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     public Customer findCustomerById(int id) {
 
         CustomerEntity customerById = customerJpaRepository.findCustomerById(id);
-        return Customer.builder()
-                .id(customerById.getId())
-                .name(customerById.getName())
-                .surname(customerById.getSurname())
-                .email(customerById.getEmail()).build();
-
+        if(customerById != null){
+            return Customer.builder()
+                    .id(customerById.getId())
+                    .name(customerById.getName())
+                    .surname(customerById.getSurname())
+                    .email(customerById.getEmail()).build();
+        }
+            return null;
     }
 
 }

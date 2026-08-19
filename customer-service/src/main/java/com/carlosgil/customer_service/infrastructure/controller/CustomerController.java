@@ -1,6 +1,6 @@
 package com.carlosgil.customer_service.infrastructure.controller;
 
-import com.carlosgil.customer.api.CustomersApi;
+import com.carlosgil.customer.api.CustomerApi;
 import com.carlosgil.customer.api.model.Customer;
 import com.carlosgil.customer_service.application.service.CustomerService;
 import com.carlosgil.customer_service.infrastructure.mapper.CustomerMapper;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CustomerController  implements CustomersApi {
+public class CustomerController  implements CustomerApi {
 
     private final CustomerService customerService;
 
@@ -25,4 +25,10 @@ public class CustomerController  implements CustomersApi {
         Customer customer = mappedCustomer.mapToApi(customerById);
         return ResponseEntity.ok(customer);
     }
+    @Override
+    public ResponseEntity<Void> deleteCustomerById(@NotNull Integer id) {
+        customerService.deleteCustomer(id);
+        return   ResponseEntity.noContent().build();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.carlosgil.customer_service.controller;
 import com.carlosgil.customer_service.application.service.CustomerService;
 import com.carlosgil.customer_service.domain.model.Customer;
 import com.carlosgil.customer_service.infrastructure.controller.CustomerController;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,18 +12,33 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.http.MediaType;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerControllerTest {
 
+    private MockMvc mockMvc;
     @Mock
     private CustomerService customerService;
 
     @InjectMocks
     private CustomerController customerController;
 
+
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(customerController)
+                .build();
+    }
 
     @Test
     void given_a_customer_with_a_valid_id_then_we_should_return_a_customer_with_valid_data() {
@@ -50,4 +66,53 @@ public class CustomerControllerTest {
         assertEquals(response.getBody().getEmail(), customer.getEmail());
 
     }
-}
+
+    @Test
+    void given_a_customer_with_a_valid_id_then_we_should_delete_a_customer() {
+        // Given
+        // When
+        ResponseEntity<Void> deleteCustomerById = customerController.deleteCustomerById(5);
+        // Then
+        assertEquals(HttpStatus.NO_CONTENT, deleteCustomerById.getStatusCode());
+        verify(customerService).deleteCustomer(5);
+    }
+
+
+    @Test
+    void given_a_customer_with_data_then_we_should_create_a_customer() throws Exception {
+
+        // GIVEN
+        Customer customer = Customer.builder()
+                .id(6)
+                .name("Carlos")
+                .surname("Gil")
+                .email("carlos.gil@example.com")
+                .build();
+
+        when(customerService.createCustomer(any(Customer.class)))
+                .thenReturn(customer);
+
+        // WHEN
+        mockMvc.perform(
+                        post("/customer")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                            {
+                                "name": "Carlos",
+                                "surname": "Gil",
+                                "email": "carlos.gil@example.com"
+                            }
+                            """)
+                )
+
+                // THEN
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(6))
+                .andExpect(jsonPath("$.name").value("Carlos"))
+                .andExpect(jsonPath("$.surname").value("Gil"))
+                .andExpect(jsonPath("$.email").value("carlos.gil@example.com"));
+
+        verify(customerService).createCustomer(any(Customer.class));
+    }
+
+    }

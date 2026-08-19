@@ -1,5 +1,6 @@
 package com.carlosgil.customer_service.controller;
 
+import com.carlosgil.customer.api.model.CustomerUpdateRequest;
 import com.carlosgil.customer_service.application.service.CustomerService;
 import com.carlosgil.customer_service.domain.model.Customer;
 import com.carlosgil.customer_service.infrastructure.controller.CustomerController;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.http.MediaType;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerControllerTest {
@@ -113,6 +115,54 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.email").value("carlos.gil@example.com"));
 
         verify(customerService).createCustomer(any(Customer.class));
+    }
+
+    @Test
+    void given_a_customer_with_a_valid_data_then_we_should_update_customer_with_valid_data() throws Exception {
+        // GIVEN
+        Customer customer = Customer.builder()
+                .id(6)
+                .name("Carlos")
+                .surname("Gil")
+                .email("carlos.gil@example.com")
+                .build();
+
+        Customer customerUpdated = new Customer();
+        customerUpdated.setId(6);
+        customerUpdated.setName("David");
+        customerUpdated.setSurname("Alonso");
+        customerUpdated.setEmail("david.alonso@example.com");
+
+        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest();
+
+        customerUpdateRequest.setName("David");
+        customerUpdateRequest.setSurname("Alonso");
+        customerUpdateRequest.setEmail("david.alonso@example.com");
+
+        when(customerService.findCustomerById(6))
+                .thenReturn(customer);
+
+        when(customerService.updateCustomer(any(Customer.class)))
+                .thenReturn(customerUpdated);
+
+        // WHEN
+        mockMvc.perform(
+                        patch("/customer/6")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                        {
+                            "name": "David",
+                            "surname": "Alonso",
+                            "email": "david.alonso@example.com"
+                        }
+                        """)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(6))
+                .andExpect(jsonPath("$.name").value("David"))
+                .andExpect(jsonPath("$.surname").value("Alonso"))
+                .andExpect(jsonPath("$.email").value("david.alonso@example.com"));
+        verify(customerService).updateCustomer(any(Customer.class));
     }
 
     }

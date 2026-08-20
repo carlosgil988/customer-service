@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class CustomerRepositoryAdapterIT {
@@ -31,7 +33,16 @@ public class CustomerRepositoryAdapterIT {
         //check that has been inserted
         Boolean existsCustomer = customerRepositoryAdapter.existsByEmail("carlos.gil@example.com");
         assertTrue(existsCustomer);
-
     }
+    @Test
+    void shouldDeleteCustomerAndPersistInDatabase() {
+        Customer customer = new Customer();
+        customer.setId(5);
+        customerRepositoryAdapter.deleteById(customer.getId());
+    }
+
+
+
+
 
 }

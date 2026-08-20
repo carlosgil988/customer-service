@@ -40,6 +40,26 @@ public class CustomerRepositoryAdapterIT {
         customer.setId(5);
         customerRepositoryAdapter.deleteById(customer.getId());
     }
+    @Test
+    void should_find_customer_by_id_and_retrieve_data_from_database() {
+        Customer customer = new Customer();
+        customer.setId(2);
+        Customer customerById = customerRepositoryAdapter.findCustomerById(customer.getId());
+        assertNotNull(customerById);
+        assertEquals("Ana", customerById.getName());
+        assertEquals("López", customerById.getSurname());
+        assertEquals("ana.lopez@example.com", customerById.getEmail());
+
+    }
+
+    @Test
+    void should_find_customer_by_id_and_email_and_retrieve_data_from_database() {
+        Customer customer = new Customer();
+        customer.setEmail("ana.lopez@example.com");
+        customer.setId(7);
+        Boolean foundCustomer = customerRepositoryAdapter.existsByEmailAndIdNot(customer.getEmail(), customer.getId());
+        assertTrue(foundCustomer);
+    }
 
 
 

@@ -44,12 +44,26 @@ OpenAPI 3
 OpenAPI Generator
 Swagger UI
 Testing
+JaCoCo
+Maven Failsafe
+
+Testing
 
 The project is developed following a TDD approach, using RED → GREEN cycles to incrementally implement the application.
 
-Tests cover the main application use cases and persistence/integration behaviour.
+Testing includes unit tests and integration tests.
 
-The project also uses H2 for integration testing with a real JPA persistence layer.
+Unit tests use JUnit 5 and Mockito.
+
+Integration tests use Spring Boot, H2 and a real JPA persistence layer to verify persistence behaviour.
+
+Maven Failsafe is used to execute integration tests during the Maven verify lifecycle.
+
+JaCoCo is used to enforce a minimum instruction coverage of 80%.
+
+Current instruction coverage: 91%
+
+
 
 Current API
 
@@ -60,6 +74,15 @@ GET /customers/{id}
 Swagger UI is available when running the application:
 
 http://localhost:8080/api-docs/index.html
+
+
+Build & Verification
+
+The complete verification process can be executed with:
+
+mvn clean verify
+
+
 Project Goals
 
 The main goal of this project is to practise and demonstrate:
@@ -71,7 +94,8 @@ Contract-first API development
 Separation of domain and infrastructure concerns
 Spring Boot application design
 Persistence with JPA
-Integration testing
+Unit and integration testing
+Code coverage verification with JaCoCo
 API documentation with OpenAPI and Swagger UI
 
 The project is being developed incrementally, with functionality and tests added through small, isolated commits.

@@ -69,6 +69,12 @@ http://localhost:8080
 
 Docker provides a reproducible Java 21 runtime environment independently of the Java version installed on the host machine.
 
+Example
+
+http://localhost:8080/customer/1 
+
+{"email":"carlos.garcia@example.com","id":1,"name":"Carlos","surname":"García"}
+
 Testing
 
 The project is developed following a TDD approach, using RED → GREEN cycles to incrementally implement the application.
